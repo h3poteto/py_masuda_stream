@@ -1,0 +1,26 @@
+version: '3'
+services:
+  storage:
+    image: busybox
+    volumes:
+      - /var/lib/mysql
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - storage:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+  python:
+    image: h3poteto/python:3.6.4
+    links:
+      - mysql:mysql
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/opt/app
+    working_dir: /var/opt/app
+    command: /bin/bash
+volumes:
+  storage:
