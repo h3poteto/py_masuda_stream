@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from masuda.models.entries import Entry
+from masuda.models.entry import Entry
 
 def index(request):
     entries = Entry.objects.all()
