@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('masuda.urls')),
+    path('', include('frontend.urls')),
+    path('api/masuda/', include('masuda.urls')),
     path('admin/', admin.site.urls),
 ]
