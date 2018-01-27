@@ -1,0 +1,30 @@
+{
+  "name": "masuda_stream",
+  "version": "1.0.0",
+  "dependencies": {
+    "npm": "^5.6.0",
+    "run": "^1.4.0",
+    "vue": "^2.5.13",
+    "vue-router": "^3.0.1",
+    "watch": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "vue-loader": "^13.7.0",
+    "vue-style-loader": "^3.1.1",
+    "vue-template-compiler": "^2.5.13",
+    "webpack": "^3.10.0",
+    "webpack-bundle-tracker": "^0.2.1"
+  },
+  "scripts": {
+    "compile": "webpack -p",
+    "watch": "webpack -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "h3poteto",
+  "license": "MIT"
+}

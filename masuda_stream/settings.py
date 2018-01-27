@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'webpack_loader',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Using django-webpack-loader
+# https://github.com/ezhome/django-webpack-loader
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'public'),
+)
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'assets/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
