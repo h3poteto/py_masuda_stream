@@ -2,15 +2,19 @@
 <div>
   <el-container>
     <el-header>
-      <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1">Processing Center</el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">Workspace</template>
-          <el-menu-item index="2-1">item one</el-menu-item>
-          <el-menu-item index="2-2">item two</el-menu-item>
-          <el-menu-item index="2-3">item three</el-menu-item>
+      <el-menu
+        :default-active="activeIndex"
+        class="margin-header-menu"
+        mode="horizontal"
+        @select="handleSelect">
+        <el-menu-item index="1">Stream</el-menu-item>
+        <el-menu-item index="2"><a href="https://anond.hatelabo.jp/" target="_blank">Post</a></el-menu-item>
+        <el-submenu index="3" class="right-menu">
+          <template slot="title">Settings</template>
+          <el-menu-item index="3-1">Login</el-menu-item>
+          <el-menu-item index="3-2">item two</el-menu-item>
+          <el-menu-item index="3-3">item three</el-menu-item>
         </el-submenu>
-        <el-menu-item index="3"><a href="https://www.ele.me" target="_blank">Orders</a></el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
@@ -30,5 +34,9 @@ export default {
 <style lang="scss" scoped>
 .el-header {
   padding: 0;
+
+  .right-menu {
+    float: right;
+  }
 }
 </style>
