@@ -1,0 +1,13 @@
+@import "common";
+
+body {
+  margin: 0;
+}
+
+#app {
+  background-color: #EBEEF5;
+}
+
+.margin-container {
+  @include side-margin-container(80%);
+}

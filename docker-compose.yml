@@ -12,9 +12,25 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+  node:
+    image: node:9-alpine
+    user: node
+    volumes:
+      - .:/var/opt/app
+    working_dir: /var/opt/app
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "3"
+    entrypoint: sh -c
+    command: |
+      "npm install && \
+      npm run watch"
   python:
     image: h3poteto/python:3.6.4
     links:
+      - node:node
       - mysql:mysql
     ports:
       - "8000:8000"
@@ -22,5 +38,6 @@ services:
       - .:/var/opt/app
     working_dir: /var/opt/app
     command: /bin/bash
+
 volumes:
   storage:
