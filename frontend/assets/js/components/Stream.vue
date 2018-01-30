@@ -2,14 +2,14 @@
 <div class="margin-container">
   <el-row :gutter="20">
     <el-col :span="18">
-      <div class="grid-content main-stream">
+      <div class="grid-content main-stream" v-for="entry in entries" v-bind:key="entry.id">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>Title</span>
+            <span>{{ entry.title }}</span>
             <el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button>
           </div>
           <div>
-            body
+            {{ entry.summary }}
           </div>
         </el-card>
       </div>
@@ -26,7 +26,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
+  computed: {
+    ...mapState({
+      entries: state => state.Stream.entries
+    })
+  },
+  created() {
+    this.$store.dispatch('Stream/fetchEntries', this.$store.state.Stream.entries)
+  }
 }
 </script>
 
