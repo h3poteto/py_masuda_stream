@@ -6,12 +6,12 @@
         :default-active="activeIndex"
         class="header-menu"
         mode="horizontal"
-        default-active="/"
         active-text-color="#409EFF"
+        :router="true"
         @select="handleSelect">
         <span class="title-logo">MasudaStream</span>
-        <el-menu-item index="/">Stream</el-menu-item>
-        <el-menu-item index="2"><a href="https://anond.hatelabo.jp/" target="_blank">Post</a></el-menu-item>
+        <el-menu-item index="1" :route="{path: '/'}">Stream</el-menu-item>
+        <el-menu-item index="2">Bookmarks</el-menu-item>
         <el-submenu index="3" class="right-menu">
           <template slot="title">Settings</template>
           <el-menu-item index="3-1">Login</el-menu-item>
@@ -29,7 +29,16 @@
 
 <script>
 export default {
-  data: {}
+  data() {
+    return {
+      activeIndex: "1",
+    }
+  },
+  methods: {
+    handleSelect(key, keyPath) {
+      console.log(key, keyPath)
+    }
+  }
 }
 </script>
 
