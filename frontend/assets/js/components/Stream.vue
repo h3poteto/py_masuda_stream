@@ -13,8 +13,14 @@
           </div>
           <div class="line"></div>
           <div class="tool-box">
-            <icon name="comment"></icon>
-            <span>{{ entry.hatena_bookmarkcount }}</span>
+            <div class="comment">
+              <icon name="comment"></icon>
+              <span>{{ entry.hatena_bookmarkcount }}</span>
+            </div>
+            <div class="date">
+              {{ parseDatetime(entry.posted_at) }}
+            </div>
+            <div class="clearfix"></div>
           </div>
         </el-card>
       </div>
@@ -32,6 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import moment from 'moment'
 
 export default {
   computed: {
@@ -41,6 +48,11 @@ export default {
   },
   created() {
     this.$store.dispatch('Stream/fetchEntries', this.$store.state.Stream.entries)
+  },
+  methods: {
+    parseDatetime(datetime) {
+      return moment(datetime, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm')
+    }
   }
 }
 </script>
@@ -66,6 +78,14 @@ export default {
     .tool-box {
       padding: 0 1.0em;
       color: #c0c4cc;
+
+      .comment {
+        float: left;
+      }
+
+      .date {
+        float: right;
+      }
     }
   }
 
