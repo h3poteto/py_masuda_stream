@@ -3,13 +3,24 @@
   <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content main-stream" v-for="entry in entries" v-bind:key="entry.id">
-        <el-card class="box-card">
+        <el-card class="box-card entry-card">
           <div slot="header" class="clearfix">
             <span>{{ entry.title }}</span>
-            <el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button>
+            <a v-bind:href="entry.link"><el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button></a>
           </div>
           <div>
             {{ entry.summary }}
+          </div>
+          <div class="line"></div>
+          <div class="tool-box">
+            <div class="comment">
+              <icon name="comment"></icon>
+              <span>{{ entry.hatena_bookmarkcount }}</span>
+            </div>
+            <div class="date">
+              {{ parseDatetime(entry.posted_at) }}
+            </div>
+            <div class="clearfix"></div>
           </div>
         </el-card>
       </div>
@@ -27,6 +38,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import moment from 'moment'
 
 export default {
   computed: {
@@ -36,6 +48,11 @@ export default {
   },
   created() {
     this.$store.dispatch('Stream/fetchEntries', this.$store.state.Stream.entries)
+  },
+  methods: {
+    parseDatetime(datetime) {
+      return moment(datetime, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm')
+    }
   }
 }
 </script>
@@ -43,10 +60,33 @@ export default {
 <style lang="scss" scoped>
 .margin-container {
 
-  .entry-info {
-    float: right;
-    padding: 0;
-    font-size: 120%;
+  .entry-card {
+    cursor: pointer;
+    margin-bottom: 0.5em;
+
+    .entry-info {
+      float: right;
+      padding: 0;
+    }
+
+    .line {
+      height: 1px;
+      background-color: #f2f6fc;
+      margin: 1.5em 0 0.5em;
+    }
+
+    .tool-box {
+      padding: 0 1.0em;
+      color: #c0c4cc;
+
+      .comment {
+        float: left;
+      }
+
+      .date {
+        float: right;
+      }
+    }
   }
 
 }
