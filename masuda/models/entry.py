@@ -7,7 +7,7 @@ class Entry(models.Model):
     content = models.TextField()
     link = models.CharField(max_length=255, null=False, unique=True)
     hatena_bookmarkcount = models.IntegerField(null=False, default=0)
-    posted_at = models.DateTimeField('posted_at')
+    posted_at = models.DateTimeField('posted_at', db_index=True)
     created_at = models.DateTimeField('created_at', auto_now_add=True)
     updated_at = models.DateTimeField('updated_at', auto_now=True)
 

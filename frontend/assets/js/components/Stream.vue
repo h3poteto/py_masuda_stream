@@ -51,7 +51,8 @@ export default {
   },
   methods: {
     parseDatetime(datetime) {
-      return moment(datetime, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm')
+      // unixtimeでもらったものはutcなのでjstに変換する必要がある
+      return moment.unix(datetime).add(9, 'hours').format('YYYY-MM-DD HH:mm')
     }
   }
 }
