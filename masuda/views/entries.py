@@ -9,7 +9,7 @@ def index(request):
     before = timezone.now()
     if "before" in request.GET:
         before = datetime.fromtimestamp(int(request.GET.get("before"))).replace(tzinfo=timezone.utc)
-    entries = Entry.objects.filter(posted_at__lte=before).order_by('posted_at').reverse()[:20]
+    entries = Entry.objects.filter(posted_at__lt=before).order_by('posted_at').reverse()[:20]
     array = []
     for e in entries:
         array.append({
