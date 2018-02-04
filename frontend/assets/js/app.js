@@ -10,7 +10,7 @@ import store from './vuex'
 Vue.component('icon', Icon)
 Vue.use(ElementUI)
 
-const app = new Vue({
+new Vue({
   router,
   store
 }).$mount('#app')

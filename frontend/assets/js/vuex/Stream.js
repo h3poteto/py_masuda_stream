@@ -6,11 +6,11 @@ const Stream = {
     entries: [
       {
         id: 0,
-        title: "",
-        summary: "",
-        content: "",
+        title: '',
+        summary: '',
+        content: '',
         hatena_bookmarkcount: 0,
-        posted_at: "",
+        posted_at: '',
       }
     ],
     lazyloading: false,
@@ -34,6 +34,8 @@ const Stream = {
           commit('loadEntries', res.data)
         })
         .catch((err) => {
+          // TODO: エラー表示は後で考えよう
+          // eslint-disable-next-line no-console
           console.log(err)
         })
     },
@@ -48,6 +50,7 @@ const Stream = {
           commit('appendEntries', res.data)
         })
         .catch((err) => {
+          // eslint-disable-next-line no-console
           console.log(err)
         })
         .then(() => {

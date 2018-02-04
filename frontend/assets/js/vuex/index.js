@@ -7,7 +7,9 @@ import Stream from './Stream'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+  // eslint-disable-next-line no-undef
   strict: process.env.NODE_ENV !== 'production',
+  // eslint-disable-next-line no-undef
   plugins: process.env.NODE_ENV !== 'production'
     ? [createLogger()]
     : [],
