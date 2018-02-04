@@ -1,6 +1,5 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const webpack = require('webpack')
 const BundleTracker = require('webpack-bundle-tracker')
 
 module.exports = {

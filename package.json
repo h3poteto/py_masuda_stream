@@ -35,7 +35,7 @@
   "scripts": {
     "compile": "webpack -p",
     "watch": "webpack -w",
-    "eslint": "eslint --ignore-path=../.gitignore .",
+    "eslint": "eslint --ignore-path=.gitignore .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "h3poteto",
