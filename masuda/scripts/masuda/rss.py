@@ -6,7 +6,7 @@ from django.db.utils import IntegrityError
 # https://syncer.jp/hatebu-api-matome
 
 HATENA_DOMAIN = "http://b.hatena.ne.jp"
-ANOND_URL="https%3A%2F%2Fanond.hatelabo.jp%2F"
+ANOND_URL ="https%3A%2F%2Fanond.hatelabo.jp%2F"
 
 def run():
     rss_url = HATENA_DOMAIN + "/entrylist?mode=rss" + "&url=" + ANOND_URL
