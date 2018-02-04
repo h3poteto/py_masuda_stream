@@ -64,7 +64,7 @@ export default {
       return moment.unix(datetime).add(9, 'hours').format('YYYY-MM-DD HH:mm')
     },
     onScroll(event) {
-      if (((document.documentElement.clientHeight + event.pageY) >= event.target.body.clientHeight - 20) && !this.$store.state.Stream.lazyloading) {
+      if (((document.documentElement.clientHeight + event.pageY) >= event.target.body.clientHeight - 10) && !this.$store.state.Stream.lazyloading) {
         this.$store.dispatch('Stream/lazyFetchEntries', this.$store.state.Stream.entries[this.$store.state.Stream.entries.length - 1].posted_at)
       }
     }
