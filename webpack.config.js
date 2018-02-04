@@ -1,6 +1,5 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const webpack = require('webpack')
 const BundleTracker = require('webpack-bundle-tracker')
 
 module.exports = {
@@ -22,6 +21,12 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,

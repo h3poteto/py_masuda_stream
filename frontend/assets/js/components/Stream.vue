@@ -2,26 +2,30 @@
 <div class="margin-container">
   <el-row :gutter="20">
     <el-col :span="18">
-      <div class="grid-content main-stream" v-for="entry in entries" v-bind:key="entry.id">
-        <el-card class="box-card entry-card">
-          <div slot="header" class="clearfix">
-            <span>{{ entry.title }}</span>
-            <a v-bind:href="entry.link"><el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button></a>
-          </div>
-          <div>
-            {{ entry.summary }}
-          </div>
-          <div class="line"></div>
-          <div class="tool-box">
-            <div class="comment">
-              <icon name="comment"></icon>
-              <span>{{ entry.hatena_bookmarkcount }}</span>
+      <div class="grid-content">
+        <div class="main-stream" v-for="entry in entries" v-bind:key="entry.id">
+          <el-card class="box-card entry-card">
+            <div slot="header" class="clearfix">
+              <span>{{ entry.title }}</span>
+              <a v-bind:href="entry.link"><el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button></a>
             </div>
-            <div class="date">
-              {{ parseDatetime(entry.posted_at) }}
+            <div>
+              {{ entry.summary }}
             </div>
-            <div class="clearfix"></div>
-          </div>
+            <div class="line"></div>
+            <div class="tool-box">
+              <div class="comment">
+                <icon name="comment"></icon>
+                <span>{{ entry.hatena_bookmarkcount }}</span>
+              </div>
+              <div class="date">
+                {{ parseDatetime(entry.posted_at) }}
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </el-card>
+        </div>
+        <el-card class="box-card loading-card" v-loading="lazyloading">
         </el-card>
       </div>
     </el-col>
@@ -43,15 +47,26 @@ import moment from 'moment'
 export default {
   computed: {
     ...mapState({
-      entries: state => state.Stream.entries
+      entries: state => state.Stream.entries,
+      lazyloading: state => state.Stream.lazyloading,
     })
   },
   created() {
     this.$store.dispatch('Stream/fetchEntries', this.$store.state.Stream.entries)
+    window.addEventListener('scroll', this.onScroll)
+  },
+  destroyed() {
+    window.removeEventListener('scroll', this.onScroll)
   },
   methods: {
     parseDatetime(datetime) {
-      return moment(datetime, 'YYYY-MM-DDTHH:mm:ssZ').format('YYYY-MM-DD HH:mm')
+      // unixtimeでもらったものはutcなのでjstに変換する必要がある
+      return moment.unix(datetime).add(9, 'hours').format('YYYY-MM-DD HH:mm')
+    },
+    onScroll(event) {
+      if (((document.documentElement.clientHeight + event.pageY) >= event.target.body.clientHeight - 10) && !this.$store.state.Stream.lazyloading) {
+        this.$store.dispatch('Stream/lazyFetchEntries', this.$store.state.Stream.entries[this.$store.state.Stream.entries.length - 1].posted_at)
+      }
     }
   }
 }
@@ -87,6 +102,10 @@ export default {
         float: right;
       }
     }
+  }
+
+  .loading-card {
+    height: 4em;
   }
 
 }
