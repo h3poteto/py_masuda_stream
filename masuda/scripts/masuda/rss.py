@@ -28,6 +28,7 @@ def run():
         )
         try:
             entry.save()
+            # TODO: ここも多重登録時にどうするかをちゃんと考えよう
             anond = Anond(entry)
             anond.fetch()
             anond.save()
