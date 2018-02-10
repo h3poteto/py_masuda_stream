@@ -25,3 +25,23 @@ def index(request):
         'entries': array,
     }
     return JsonResponse(context)
+
+
+def show(request, entry_id):
+    e = Entry.objects.get(id=entry_id)
+    entry = {
+        'id': e.id,
+        'entry_id': e.entry_id,
+        'title': e.title,
+        'summary': e.summary,
+        'content': e.content,
+        'link': e.link,
+        'hatena_bookmarkcount': e.hatena_bookmarkcount,
+        'posted_at': e.posted_at.strftime("%s"),
+    }
+
+    # TODO: entry_detailとanondを取得してきてjsonを構築しなおす.
+    context = {
+        'entry': entry,
+    }
+    return JsonResponse(context)
