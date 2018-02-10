@@ -2,6 +2,7 @@ import feedparser
 from masuda.models.entry import Entry
 from django.db.utils import IntegrityError
 
+
 # $ python manage.py runscript masuda.rss
 # https://syncer.jp/hatebu-api-matome
 
@@ -10,7 +11,7 @@ ANOND_URL = "https%3A%2F%2Fanond.hatelabo.jp%2F"
 
 
 def run():
-    rss_url = HATENA_DOMAIN + "/entrylist?mode=rss" + "&url=" + ANOND_URL
+    rss_url = HATENA_DOMAIN + "/entrylist?mode=rss" + "&url=" + ANOND_URL + "&sort=recent"
     rss = feedparser.parse(rss_url)
     print(rss.entries[0].keys())
     for e in rss.entries:
