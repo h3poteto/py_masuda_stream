@@ -1,6 +1,9 @@
 import feedparser
-from masuda.models.entry import Entry
 from django.db.utils import IntegrityError
+from masuda.models.entry import Entry
+from masuda.jobs.anond import Anond
+from masuda.jobs.bookmark import Bookmark
+
 
 # $ python manage.py runscript masuda.rss
 # https://syncer.jp/hatebu-api-matome
@@ -10,7 +13,7 @@ ANOND_URL = "https%3A%2F%2Fanond.hatelabo.jp%2F"
 
 
 def run():
-    rss_url = HATENA_DOMAIN + "/entrylist?mode=rss" + "&url=" + ANOND_URL
+    rss_url = HATENA_DOMAIN + "/entrylist?mode=rss" + "&url=" + ANOND_URL + "&sort=recent"
     rss = feedparser.parse(rss_url)
     print(rss.entries[0].keys())
     for e in rss.entries:
@@ -25,5 +28,13 @@ def run():
         )
         try:
             entry.save()
+            # TODO: ここも多重登録時にどうするかをちゃんと考えよう
+            anond = Anond(entry)
+            anond.fetch()
+            anond.save()
+
+            bookmark = Bookmark(entry)
+            bookmark.get()
+            bookmark.save()
         except IntegrityError:
             print("Save error: %s" % entry.__dict__.values())
