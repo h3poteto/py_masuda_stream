@@ -40,7 +40,7 @@ class Bookmark():
                 entry_detail=detail,
                 bookmarked_at=get_current_timezone().localize(
                     datetime.strptime(
-                        b["tiemstamp"],
+                        b["timestamp"],
                         '%Y/%m/%d %H:%M:%S')
                 ),
                 comment=b["comment"],

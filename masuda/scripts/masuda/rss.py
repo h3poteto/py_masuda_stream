@@ -1,6 +1,8 @@
 import feedparser
-from masuda.models.entry import Entry
 from django.db.utils import IntegrityError
+from masuda.models.entry import Entry
+from masuda.jobs.anond import Anond
+from masuda.jobs.bookmark import Bookmark
 
 
 # $ python manage.py runscript masuda.rss
@@ -26,5 +28,12 @@ def run():
         )
         try:
             entry.save()
+            anond = Anond(entry)
+            anond.fetch()
+            anond.save()
+
+            bookmark = Bookmark(entry)
+            bookmark.get()
+            bookmark.save()
         except IntegrityError:
             print("Save error: %s" % entry.__dict__.values())

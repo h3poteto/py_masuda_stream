@@ -1,7 +1,7 @@
 from pyquery import PyQuery
 from urllib.parse import urlparse
 from masuda.models.entry import Entry
-import masuda.models.anond.Anond
+import masuda.models.anond
 
 
 # anond.hatelabo.jpの特定記事をスクレイピングし内容を保存する
