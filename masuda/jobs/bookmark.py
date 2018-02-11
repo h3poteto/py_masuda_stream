@@ -3,38 +3,44 @@ from masuda.models.entry_bookmark import EntryBookmark
 from datetime import datetime
 from django.utils.timezone import get_current_timezone
 import requests
+from logging import getLogger
 
 
 # b.hatena.ne.jpからエントリーの詳細情報を持ってきて保存する
 class Bookmark():
-    api = 'http://b.hatena.ne.jp/entry/jsonlite/?url='
+    API = 'http://b.hatena.ne.jp/entry/jsonlite/?url='
 
-    def __init__(self, entry):
+    def __init__(self, entry, logger=None):
         self.entry = entry
         self.response = None
+        self.json_body = None
+        self.logger = logger or getLogger(__name__)
 
-    def get(self):
+    def fetch(self):
+        self.logger.info("Fetching bookmark: %s", self.entry.link)
         self.response = requests.get(
-           Bookmark.api + self.entry.link,
+           self.API + self.entry.link,
         )
+        self.json_body = self.response.json()
 
     def save(self):
         detail = self.__save_detail()
         self.__save_bookmarks(detail)
+        self.logger.info("Save complete: %s", detail.id)
 
     def __save_detail(self):
         detail = EntryDetail.objects.create(
             entry=self.entry,
-            eid=self.response.json()["eid"],
-            count=self.response.json()["count"],
-            url=self.response.json()["url"],
-            title=self.response.json()["title"],
-            screenshot=self.response.json()["screenshot"],
+            eid=self.json_body["eid"],
+            count=self.json_body["count"],
+            url=self.json_body["url"],
+            title=self.json_body["title"],
+            screenshot=self.json_body["screenshot"],
         )
         return detail
 
     def __save_bookmarks(self, detail):
-        bookmarks = self.response.json()["bookmarks"]
+        bookmarks = self.json_body["bookmarks"]
         for b in bookmarks:
             EntryBookmark.objects.create(
                 entry_detail=detail,

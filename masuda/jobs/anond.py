@@ -1,5 +1,6 @@
 from pyquery import PyQuery
 from urllib.parse import urlparse
+from logging import getLogger
 from masuda.models.entry import Entry
 import masuda.models.anond
 
@@ -7,22 +8,24 @@ import masuda.models.anond
 # anond.hatelabo.jpの特定記事をスクレイピングし内容を保存する
 # ここはAPIを提供していないのでスクレイピングするしかない
 class Anond():
-    host = "anond.hatelabo.jp"
+    Host = "anond.hatelabo.jp"
 
-    def __init__(self, entry):
+    def __init__(self, entry, logger=None):
         if isinstance(entry, Entry) is not True:
             raise TypeError('entry is not Entry')
 
         self.entry = entry
         self.content_html = ""
+        self.logger = logger or getLogger(__name__)
 
     # entryのURLから記事の中身を取ってくる
     def fetch(self):
         # anondかどうかのチェック
         url = urlparse(self.entry.link)
-        if url.hostname != Anond.host:
-            raise RuntimeError(Anond.host)
+        if url.hostname != self.Host:
+            raise RuntimeError(self.Host)
 
+        self.logger.info("Fetching anond: %s", self.entry.link)
         pq = PyQuery(url=self.entry.link)
         elements = []
         content_start = False
@@ -41,7 +44,8 @@ class Anond():
         self.content_html = ''.join(elements)
 
     def save(self):
-        masuda.models.anond.Anond.objects.create(
+        o = masuda.models.anond.Anond.objects.create(
             entry=self.entry,
             content_html=self.content_html,
         )
+        self.logger.info("Save complete: %s", o.id)
