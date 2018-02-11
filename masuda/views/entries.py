@@ -46,3 +46,21 @@ def show(request, entry_id):
         'entry': entry,
     }
     return JsonResponse(context)
+
+
+def bookmarks(request, entry_id):
+    e = Entry.objects.select_related('entrydetail').prefetch_related('entrydetail__bookmarks').get(id=entry_id)
+    bookmarks = []
+    for b in e.entrydetail.bookmarks.all():
+        bookmark = {
+            'id': b.id,
+            'comment': b.comment,
+            'user': b.user,
+            'bookmarked_at': b.bookmarked_at.strftime("%s"),
+        }
+        bookmarks.append(bookmark)
+
+    context = {
+        'bookmarks': bookmarks,
+    }
+    return JsonResponse(context)
