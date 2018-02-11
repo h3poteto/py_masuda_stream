@@ -9,4 +9,4 @@ class Anond(models.Model):
     updated_at = models.DateTimeField('updated_at', auto_now=True)
 
     def __str__(self):
-        return self.title
+        return str(self.id)

@@ -28,19 +28,20 @@ def index(request):
 
 
 def show(request, entry_id):
-    e = Entry.objects.get(id=entry_id)
+    e = Entry.objects.select_related('entrydetail', 'anond').get(id=entry_id)
     entry = {
         'id': e.id,
         'entry_id': e.entry_id,
         'title': e.title,
         'summary': e.summary,
         'content': e.content,
+        'anond_content_html': e.anond.content_html,
         'link': e.link,
-        'hatena_bookmarkcount': e.hatena_bookmarkcount,
+        'hatena_bookmarkcount': e.entrydetail.count,
+        'screenshot': e.entrydetail.screenshot,
         'posted_at': e.posted_at.strftime("%s"),
     }
 
-    # TODO: entry_detailとanondを取得してきてjsonを構築しなおす.
     context = {
         'entry': entry,
     }
