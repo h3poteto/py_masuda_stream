@@ -25,3 +25,42 @@ def index(request):
         'entries': array,
     }
     return JsonResponse(context)
+
+
+def show(request, entry_id):
+    e = Entry.objects.select_related('entrydetail', 'anond').get(id=entry_id)
+    entry = {
+        'id': e.id,
+        'entry_id': e.entry_id,
+        'title': e.title,
+        'summary': e.summary,
+        'content': e.content,
+        'anond_content_html': e.anond.content_html,
+        'link': e.link,
+        'hatena_bookmarkcount': e.entrydetail.count,
+        'screenshot': e.entrydetail.screenshot,
+        'posted_at': e.posted_at.strftime("%s"),
+    }
+
+    context = {
+        'entry': entry,
+    }
+    return JsonResponse(context)
+
+
+def bookmarks(request, entry_id):
+    e = Entry.objects.select_related('entrydetail').prefetch_related('entrydetail__bookmarks').get(id=entry_id)
+    bookmarks = []
+    for b in e.entrydetail.bookmarks.all():
+        bookmark = {
+            'id': b.id,
+            'comment': b.comment,
+            'user': b.user,
+            'bookmarked_at': b.bookmarked_at.strftime("%s"),
+        }
+        bookmarks.append(bookmark)
+
+    context = {
+        'bookmarks': bookmarks,
+    }
+    return JsonResponse(context)
