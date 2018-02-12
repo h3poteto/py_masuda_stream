@@ -11,3 +11,9 @@ body {
 .margin-container {
   @include side-margin-container(80%);
 }
+
+.anond-content {
+  a:link, a:visited, a:hover, a:active, a:focus {
+    color: #606266;
+  }
+}
