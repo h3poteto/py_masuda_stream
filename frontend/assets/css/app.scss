@@ -13,7 +13,11 @@ body {
 }
 
 .anond-content {
-  a:link, a:visited, a:hover, a:active, a:focus {
-    color: #606266;
+  a:link,
+  a:visited,
+  a:hover,
+  a:active,
+  a:focus {
+    color: $regular-text-color;
   }
 }
