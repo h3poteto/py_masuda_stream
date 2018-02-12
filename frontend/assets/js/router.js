@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import GlobalHeader from './components/GlobalHeader.vue'
-import Stream from './components/Stream.vue'
+import StreamIndex from './components/Stream/Index.vue'
+import StreamShow from './components/Stream/Show.vue'
 
 Vue.use(VueRouter)
 
@@ -12,7 +13,13 @@ const routes = [
     children: [
       {
         path: '',
-        component: Stream,
+        component: StreamIndex,
+        children: [
+          {
+            path: 'entries/:id',
+            component: StreamShow,
+          }
+        ],
       },
     ],
   },

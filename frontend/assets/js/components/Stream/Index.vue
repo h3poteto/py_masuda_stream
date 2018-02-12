@@ -3,7 +3,7 @@
   <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content">
-        <div class="main-stream" v-for="entry in entries" v-bind:key="entry.id">
+        <div class="main-stream" v-for="entry in entries" v-bind:key="entry.id" v-on:click="openEntryDetail(entry.id)">
           <el-card class="box-card entry-card">
             <div slot="header" class="clearfix">
               <span>{{ entry.title }}</span>
@@ -37,6 +37,7 @@
       </div>
     </el-col>
   </el-row>
+  <router-view></router-view>
 </div>
 </template>
 
@@ -47,12 +48,12 @@ import moment from 'moment'
 export default {
   computed: {
     ...mapState({
-      entries: state => state.Stream.entries,
-      lazyloading: state => state.Stream.lazyloading,
+      entries: state => state.Stream.Index.entries,
+      lazyloading: state => state.Stream.Index.lazyloading,
     })
   },
   created() {
-    this.$store.dispatch('Stream/fetchEntries', this.$store.state.Stream.entries)
+    this.$store.dispatch('Stream/Index/fetchEntries', this.$store.state.Stream.Index.entries)
     window.addEventListener('scroll', this.onScroll)
   },
   destroyed() {
@@ -64,9 +65,14 @@ export default {
       return moment.unix(datetime).add(9, 'hours').format('YYYY-MM-DD HH:mm')
     },
     onScroll(event) {
-      if (((document.documentElement.clientHeight + event.pageY) >= event.target.body.clientHeight - 10) && !this.$store.state.Stream.lazyloading) {
-        this.$store.dispatch('Stream/lazyFetchEntries', this.$store.state.Stream.entries[this.$store.state.Stream.entries.length - 1].posted_at)
+      if (((document.documentElement.clientHeight + event.pageY) >= event.target.body.clientHeight - 10) && !this.$store.state.Stream.Index.lazyloading) {
+        this.$store.dispatch('Stream/Index/lazyFetchEntries', this.$store.state.Stream.Index.entries[this.$store.state.Stream.Index.entries.length - 1].posted_at)
       }
+    },
+    openEntryDetail(entryId) {
+      // モーダルを開いた際にvue-routerによる遷移をさせることでURLを変えたい
+      this.$store.dispatch('Stream/Show/openEntryDetail', entryId)
+      this.$router.push({ path: `/entries/${entryId}` })
     }
   }
 }
