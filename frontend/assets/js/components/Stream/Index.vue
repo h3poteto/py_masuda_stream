@@ -3,7 +3,7 @@
   <el-row :gutter="20">
     <el-col :span="18">
       <div class="grid-content">
-        <div class="main-stream" v-for="entry in entries" v-bind:key="entry.id" v-on:click="openEntryDetail(entry.id)">
+        <div class="entry" v-for="entry in entries" v-bind:key="entry.id" v-on:click="openEntryDetail(entry.id)">
           <el-card class="box-card entry-card">
             <div slot="header" class="clearfix">
               <span>{{ entry.title }}</span>
