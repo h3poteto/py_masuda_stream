@@ -9,6 +9,7 @@ const Show = {
       hatena_bookmarkcount: 0,
       posted_at: '',
     },
+    bookmarks: [],
     entryDetailVisible: true,
     loading: true,
   },
@@ -19,6 +20,9 @@ const Show = {
     setEntry(state, response) {
       state.entry = response.entry
     },
+    setBookmarks(state, response) {
+      state.bookmarks = response.bookmarks
+    },
     cleanEntry(state) {
       state.entry = {
         title: '',
@@ -26,6 +30,9 @@ const Show = {
         hatena_bookmarkcount: 0,
         posted_at: '',
       }
+    },
+    cleanBookmarks(state) {
+      state.bookmarks = []
     },
     changeLoading(state, loading) {
       state.loading = loading
@@ -35,7 +42,7 @@ const Show = {
     openEntryDetail({ commit }) {
       commit('changeEntryDetailVisible', true)
     },
-    load({ commit }, id) {
+    loadEntry({ commit }, id) {
       axios
         .get(`/api/masuda/entries/${id}`)
         .then((res) => {
@@ -48,8 +55,20 @@ const Show = {
           commit('changeLoading', false)
         })
     },
+    loadBookmarks({ commit }, id) {
+      axios
+        .get(`/api/masuda/entries/${id}/bookmarks`)
+        .then((res) => {
+          commit('setBookmarks', res.data)
+        })
+        .catch((err) => {
+          // eslint-disable-next-line no-console
+          console.log(err)
+        })
+    },
     cleanup({ commit }) {
       commit('cleanEntry', {})
+      commit('cleanBookmarks', {})
     },
     startLoading({ commit }) {
       commit('changeLoading', true)
