@@ -5,3 +5,5 @@ public
 node_modules
 __pycache__
 webpack-stats.json
+pip-selfcheck.json
+.cache-loader
