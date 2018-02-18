@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+DJANGO_ENV = os.getenv('DJANGO_ENV', 'dev')
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -147,14 +149,30 @@ WEBPACK_LOADER = {
     }
 }
 
-# TODO: json logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'formatters': {  # formatter attributes: https://docs.python.org/3/library/logging.html#logrecord-attributes
+        'debug': {
+            'format': '\t'.join([
+                "[%(levelname)s]",
+                "message:%(message)s",
+                "asctime:%(asctime)s",
+                "module:%(module)s",
+                "process:%(process)d",
+                "thread:%(thread)d",
+            ])
+        },
+        'json': {  # using python-json-logger
+            'format': '%(message)s %(lineno)d %(pathname)s',
+            'class': 'pythonjsonlogger.jsonlogger.JsonFormatter',
+        },
+    },
     'handlers': {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
+            'formatter': 'json' if DJANGO_ENV == 'prod' else 'debug',
         },
     },
     'loggers': {
