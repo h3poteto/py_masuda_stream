@@ -29,6 +29,9 @@ services:
       npm run watch"
   python:
     image: h3poteto/python:3.6.4
+    environment:
+      HATENA_CONSUMER_KEY: $HATENA_CONSUMER_KEY
+      HATENA_CONSUMER_SECRET: $HATENA_CONSUMER_SECRET
     links:
       - node:node
       - mysql:mysql
