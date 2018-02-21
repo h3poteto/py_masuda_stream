@@ -2,6 +2,7 @@ const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const BundleTracker = require('webpack-bundle-tracker')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 // eslint-disable-next-line no-undef
 const production = process.env.NODE_ENV === 'production'
@@ -12,6 +13,7 @@ module.exports = {
   entry: {
     'js/app': './frontend/assets/js/app.js',
     'css/app': './frontend/assets/css/app.js',
+    'css/not_login': './frontend/assets/css/not_login.js',
   },
   output: {
     path: path.resolve('./public/assets/'),
@@ -91,6 +93,7 @@ module.exports = {
   plugins: [
     new ExtractTextPlugin(`${filename}.css`),
     new BundleTracker({filename: './webpack-stats.json'}),
+    new CopyWebpackPlugin([{ from: './frontend/assets/images', to: './images' }]),
     ...(
       production ? [
         new UglifyJsPlugin()

@@ -1,0 +1,92 @@
+@import "common";
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+#not_login {
+  height: 100%;
+}
+
+.session {
+  background: url("/static/assets/images/login_background.jpg") no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+  background-size: cover;
+  min-height: 100%;
+  width: 100%;
+
+  .el-alert {
+    margin: 0 auto;
+    width: 99%;
+  }
+
+  .logo {
+    color: $extra-light-border-color;
+    font-size: large;
+    padding: 8px 16px;
+  }
+
+  .main {
+    color: rgb(255, 255, 255);
+    text-align: center;
+  }
+
+  article {
+    background: inherit;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+    margin-top: 100px;
+    overflow: hidden;
+    width: 360px;
+
+    .title {
+      background: rgba(225, 225, 225, 0.5);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 8px;
+      text-align: center;
+    }
+
+    .content {
+      background: rgba(255, 255, 255, 0.5);
+      padding: 8px;
+    }
+  }
+
+  article::before {
+    background: inherit;
+    bottom: 0;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+
+  .sign-in-board,
+  .sign-up-board {
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: rgb(51, 51, 51);
+    display: inline-block;
+    padding: 20px;
+    text-align: center;
+    width: 80%;
+
+    .session-button {
+      background-color: $blue-color;
+      border: 0;
+      border-radius: 4px;
+      color: #ffffff;
+      display: block;
+      padding: 12px 0;
+      text-decoration: none;
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{% extends "account/layout.html" %}
+
+{% block title %}Login Error{% endblock %}
+
+{% block content %}
+
+{% load account socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+
+<div class="session">
+  <div class="el-alert el-alert--error" role="alert">
+    <i class="el-alert__icon el-icon-error"></i>
+    <div class="el-alert__content">
+      <span class="el-alert__title">Login failed</span>
+    </div>
+  </div>
+  <div class="logo">MasudaStream</div>
+  <div class="main">
+    <article>
+      <div class="title">
+        <h3>Login</h3>
+      </div>
+      <div class="content">
+        <div class="sign-in-board">
+          {% load socialaccount %}
+
+          {% get_providers as socialaccount_providers %}
+
+          {% for provider in socialaccount_providers %}
+          <a title="{{provider.name}}"
+             class="session-button {{provider.id}}"
+             href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">Login with {{provider.name}}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+{% endblock %}

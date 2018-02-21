@@ -41,8 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_extensions',
     'webpack_loader',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'hatenaprovider',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +65,7 @@ ROOT_URLCONF = 'masuda_stream.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'allauth', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -182,3 +187,24 @@ LOGGING = {
         },
     },
 }
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+SITE_ID = 1
+
+# https://github.com/h3poteto/django-allauth/blob/master/allauth/socialaccount/providers/oauth/views.py#L47
+# ここでscopeをスペース区切りにしているが
+# hatena側では%2C = ,にしろといっている
+# http://developer.hatena.ne.jp/ja/documents/auth/apis/oauth/consumer
+# そのため複数指定をカンマ区切りに強制している
+SOCIALACCOUNT_PROVIDERS = {
+    'hatena': {
+      'SCOPE': ['read_public,write_public']
+    }
+}
+
+LOGIN_REDIRECT_URL = "/"
