@@ -10,5 +10,10 @@ linters:
     enabled: true
     max_depth: 5
 
+  SelectorFormat:
+    enabled: true
+    id_convention: snake_case
+    class_convention: hyphenated_lowercase
+
   ColorVariable:
     enabled: false
