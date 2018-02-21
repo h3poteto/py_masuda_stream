@@ -1,6 +1,6 @@
 {% extends "account/layout.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Login Error{% endblock %}
 
 {% block content %}
 
@@ -9,6 +9,12 @@
 {% get_providers as socialaccount_providers %}
 
 <div class="session">
+  <div class="el-alert el-alert--error" role="alert">
+    <i class="el-alert__icon el-icon-error"></i>
+    <div class="el-alert__content">
+      <span class="el-alert__title">Login failed</span>
+    </div>
+  </div>
   <div class="logo">MasudaStream</div>
   <div class="main">
     <article>
@@ -33,6 +39,4 @@
 </div>
 
 {% include "socialaccount/snippets/login_extra.html" %}
-
-
 {% endblock %}

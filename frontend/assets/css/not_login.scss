@@ -15,21 +15,26 @@ body {
 
 .session {
   background: url("/static/assets/images/login_background.jpg") no-repeat;
-  background-size: cover;
-  background-position: 50% 50%;
   background-attachment: fixed;
-  width: 100%;
+  background-position: 50% 50%;
+  background-size: cover;
   min-height: 100%;
+  width: 100%;
+
+  .el-alert {
+    margin: 0 auto;
+    width: 99%;
+  }
 
   .logo {
     color: $extra-light-border-color;
-    padding: 8px 16px;
     font-size: large;
+    padding: 8px 16px;
   }
 
   .main {
-    text-align: center;
     color: rgb(255, 255, 255);
+    text-align: center;
   }
 
   article {
