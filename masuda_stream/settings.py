@@ -206,3 +206,5 @@ SOCIALACCOUNT_PROVIDERS = {
       'SCOPE': ['read_public,write_public']
     }
 }
+
+LOGIN_REDIRECT_URL = "/"
