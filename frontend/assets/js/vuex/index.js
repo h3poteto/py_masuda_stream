@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
 
+import GlobalHeader from './GlobalHeader'
 import Stream from './Stream'
+
 
 Vue.use(Vuex)
 
@@ -14,6 +16,7 @@ const store = new Vuex.Store({
     ? [createLogger()]
     : [],
   modules: {
+    GlobalHeader,
     Stream,
   },
 })
