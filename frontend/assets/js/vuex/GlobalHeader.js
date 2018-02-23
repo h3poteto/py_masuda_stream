@@ -8,6 +8,9 @@ const GlobalHeader = {
   mutations: {
     loadUser(state, data) {
       state.user = data.user
+    },
+    logoutUser(state) {
+      state.user = null
     }
   },
   actions: {
@@ -21,6 +24,23 @@ const GlobalHeader = {
           // eslint-disable-next-line no-console
           console.log(err)
         })
+    },
+    logout({ commit }, csrf) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('/accounts/logout/', null, {
+            headers: {
+              'X-CSRFToken': csrf,
+            }
+          })
+          .then((res) => {
+            commit('logoutUser', res.data)
+            resolve(res)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     }
   },
 }

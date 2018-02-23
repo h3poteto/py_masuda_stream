@@ -8,6 +8,7 @@
     "moment": "^2.20.1",
     "vue": "^2.5.13",
     "vue-awesome": "^2.3.4",
+    "vue-cookie": "^1.1.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
