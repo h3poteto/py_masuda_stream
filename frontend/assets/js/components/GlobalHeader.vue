@@ -11,13 +11,12 @@
         @select="handleSelect">
         <span class="title-logo">MasudaStream</span>
         <el-menu-item index="1" :route="{path: '/'}">Stream</el-menu-item>
-        <el-menu-item index="2">Bookmarks</el-menu-item>
-        <el-submenu index="3" class="right-menu">
-          <template slot="title">Settings</template>
-          <el-menu-item index="3-1">Login</el-menu-item>
-          <el-menu-item index="3-2">item two</el-menu-item>
-          <el-menu-item index="3-3">item three</el-menu-item>
+        <el-menu-item index="2" :route="{path: '/bookmarks'}">Bookmarks</el-menu-item>
+        <el-submenu index="3" v-if="isLoggedIn()" class="right-menu">
+          <template slot="title"><img class="avatar" :src="user.avatar_url" /></template>
+          <el-menu-item index="3-1" :route="{path: '/'}">Logout</el-menu-item>
         </el-submenu>
+        <el-menu-item index="4" v-if="!isLoggedIn()" class="right-menu" :route="{path: '/'}">Login</el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
@@ -28,15 +27,41 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data() {
     return {
       activeIndex: "1",
     }
   },
+  computed: {
+    ...mapState({
+      user: state => state.GlobalHeader.user,
+    })
+  },
+  created() {
+    this.$store.dispatch('GlobalHeader/fetchUser')
+  },
   methods: {
+    isLoggedIn() {
+      return this.$store.state.GlobalHeader.user !== null
+    },
     handleSelect(key, keyPath) {
-      console.log(key, keyPath)
+      switch(key) {
+      case "3-1":
+        // ログアウトにはCSRFTokenが必要になる
+        let csrf = this.$cookie.get('csrftoken')
+        return this.$store.dispatch('GlobalHeader/logout', csrf)
+          .then((res) => {
+            this.$message({
+              message: 'Logout complete',
+              type: 'success',
+            })
+          })
+      case "4":
+        return window.location.href = '/accounts/login'
+      }
     }
   }
 }
@@ -60,6 +85,12 @@ export default {
 
   .right-menu {
     float: right;
+  }
+
+  img.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 2px;
   }
 }
 </style>

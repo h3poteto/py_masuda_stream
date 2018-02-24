@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueCookie from 'vue-cookie'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'vue-awesome/icons'
@@ -12,6 +13,7 @@ import store from './vuex'
 loadProgressBar()
 
 Vue.component('icon', Icon)
+Vue.use(VueCookie)
 Vue.use(ElementUI)
 
 new Vue({
