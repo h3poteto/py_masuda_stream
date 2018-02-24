@@ -13,7 +13,21 @@
       </div>
       <div class="clearfix"></div>
     </div>
-    <div class="line"></div>
+    <div class="my-bookmark">
+      <div class="add-bookmark" v-if="isLoggedIn()">
+        <el-form :model="bookmarkForm" :rules="bookmarkRules" ref="bookmarkForm" class="add-bookmark-form">
+          <el-form-item prop="comment">
+            <el-input type="textarea" v-model="bookmarkForm.comment"></el-input>
+          </el-form-item>
+          <el-form-item class="submit">
+            <el-button type="primary" @click="submitBookmark">Bookmark</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+      <div class="login-required" v-if="!isLoggedIn()">
+        <el-button type="primary" @click="goToLoginPage">Login to add bookmark</el-button>
+      </div>
+    </div>
     <div class="bookmark-comment">
       <div class="bookmark" v-for="bookmark in bookmarks" v-bind:key="bookmark.id">
         <div class="icon"><img :src="icon(bookmark.user)" /></div>
@@ -35,11 +49,24 @@ import { mapState } from 'vuex'
 import moment from 'moment'
 
 export default {
+  data() {
+    return {
+      bookmarkForm: {
+        comment: '',
+      },
+      bookmarkRules: {
+        comment: [
+          { min: 0, max: 100, message: 'Length should be 0 to 100', trigger: 'blur' }
+        ],
+      },
+    }
+  },
   computed: {
     ...mapState({
       entry: state => state.Stream.Show.entry,
       loading: state => state.Stream.Show.loading,
       bookmarks: state => state.Stream.Show.bookmarks,
+      user: state => state.GlobalHeader.user,
     }),
     entryDetailVisible: {
       get() {
@@ -66,7 +93,25 @@ export default {
     },
     icon(user) {
       return `http://cdn1.www.st-hatena.com/users/${user.slice(0,2)}/${user}/profile.gif`
-    }
+    },
+    isLoggedIn() {
+      return this.$store.state.GlobalHeader.user !== null
+    },
+    goToLoginPage() {
+      window.location.href = '/accounts/login'
+    },
+    submitBookmark() {
+      this.$refs["bookmarkForm"].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          this.$message({
+            message: 'Validation error',
+            type: 'error',
+          })
+        }
+      })
+    },
   }
 }
 </script>
@@ -95,6 +140,27 @@ export default {
 
   .date {
     float: right;
+  }
+}
+
+.my-bookmark {
+  background-color: #e4e7ed;
+  padding: 1em 1em;
+  margin: 1.5em 0 1.0em 0;
+  border-radius: 4px;
+
+  .add-bookmark {
+    .el-form-item {
+      margin-bottom: 4px;
+    }
+
+    .submit {
+      text-align: right;
+    }
+  }
+
+  .login-required {
+    text-align: center;
   }
 }
 
