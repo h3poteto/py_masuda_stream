@@ -12,6 +12,7 @@ const Show = {
     bookmarks: [],
     entryDetailVisible: true,
     loading: true,
+    userAlreadyBookmarked: false,
   },
   mutations: {
     changeEntryDetailVisible(state, open) {
@@ -36,6 +37,9 @@ const Show = {
     },
     changeLoading(state, loading) {
       state.loading = loading
+    },
+    changeBookmarked(state, bookmarked) {
+      state.bookmarked = bookmarked
     }
   },
   actions: {
@@ -75,6 +79,21 @@ const Show = {
     },
     stopLoading({ commit }) {
       commit('changeLoading', false)
+    },
+    addBookmark({ commit }, comment) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post('/api/user/bookmark', {
+            comment: comment,
+          })
+          .then((res) => {
+            commit('changeBookmakred', true)
+            resolve(res)
+          })
+          .catch((err) => {
+            reject(err)
+          })
+      })
     }
   }
 }

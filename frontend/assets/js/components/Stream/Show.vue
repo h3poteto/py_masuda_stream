@@ -103,7 +103,19 @@ export default {
     submitBookmark() {
       this.$refs["bookmarkForm"].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.$store.dispatch('Stream/Show/addBookmark', this.bookmarkForm.comment)
+            .then((res) => {
+              this.$message({
+                message: 'Bookmarked',
+                type: 'success',
+              })
+            })
+            .catch((err) => {
+              this.$message({
+                message: 'Can not add bookmark',
+                type: 'error',
+              })
+            })
         } else {
           this.$message({
             message: 'Validation error',
