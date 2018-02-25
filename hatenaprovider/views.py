@@ -17,7 +17,6 @@ class HatenaAPI(OAuth):
     url = 'http://n.hatena.com/applications/my.json'
 
     def get_user_info(self):
-        # import pdb; pdb.set_trace()
         user = json.loads(self.query(self.url))
         return user
 
