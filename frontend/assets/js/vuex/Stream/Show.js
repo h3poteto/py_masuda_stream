@@ -80,11 +80,16 @@ const Show = {
     stopLoading({ commit }) {
       commit('changeLoading', false)
     },
-    addBookmark({ commit }, comment) {
+    addBookmark({ commit }, form) {
       return new Promise((resolve, reject) => {
         axios
           .post('/api/user/bookmark', {
-            comment: comment,
+            comment: form.comment,
+            url: form.url,
+          }, {
+            headers: {
+              'X-CSRFToken': form.csrf,
+            }
           })
           .then((res) => {
             commit('changeBookmakred', true)

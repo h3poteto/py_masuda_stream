@@ -103,7 +103,12 @@ export default {
     submitBookmark() {
       this.$refs["bookmarkForm"].validate((valid) => {
         if (valid) {
-          this.$store.dispatch('Stream/Show/addBookmark', this.bookmarkForm.comment)
+          let csrf = this.$cookie.get('csrftoken')
+          this.$store.dispatch('Stream/Show/addBookmark',
+                               Object.assign({}, this.bookmarkForm,{
+                                 csrf: csrf,
+                                 url: this.entry.link,
+                               }))
             .then((res) => {
               this.$message({
                 message: 'Bookmarked',
