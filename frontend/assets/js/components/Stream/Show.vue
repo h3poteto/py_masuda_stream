@@ -14,7 +14,18 @@
       <div class="clearfix"></div>
     </div>
     <div class="my-bookmark">
-      <div class="add-bookmark" v-if="isLoggedIn()">
+      <div class="my-comment" v-if="isLoggedIn() && userAlreadyBookmarked">
+        <div class="bookmark">
+          <div class="icon"><img :src="user.avatar_url" /></div>
+          <div class="head-wrapper">
+            <div class="user">{{ user.uid }}</div>
+            <div class="bookmarked_at">{{ cutJSTDatetime(userBookmarked.created_datetime) }}</div>
+          </div>
+          <div class="comment">{{ userBookmarked.comment }}</div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div class="add-bookmark" v-if="isLoggedIn() && !userAlreadyBookmarked">
         <el-form :model="bookmarkForm" :rules="bookmarkRules" ref="bookmarkForm" class="add-bookmark-form">
           <el-form-item prop="comment">
             <el-input type="textarea" v-model="bookmarkForm.comment"></el-input>
@@ -67,6 +78,8 @@ export default {
       loading: state => state.Stream.Show.loading,
       bookmarks: state => state.Stream.Show.bookmarks,
       user: state => state.GlobalHeader.user,
+      userAlreadyBookmarked: state => state.Stream.Show.userAlreadyBookmarked,
+      userBookmarked: state => state.Stream.Show.userBookmarked,
     }),
     entryDetailVisible: {
       get() {
@@ -80,12 +93,20 @@ export default {
   created() {
     this.$store.dispatch('Stream/Show/startLoading', this.$store.state.Stream.Show.loading)
     this.$store.dispatch('Stream/Show/loadEntry', this.$route.params.id)
+      .then((res) => {
+        let url = res.data.entry.link
+        this.$store.dispatch('Stream/Show/fetchUserBookmark', url)
+      })
     this.$store.dispatch('Stream/Show/loadBookmarks', this.$route.params.id)
   },
   methods: {
     parseDatetime(datetime) {
       // unixtimeでもらったものはutcなのでjstに変換する必要がある
       return moment.unix(datetime).add(9, 'hours').format('YYYY-MM-DD HH:mm')
+    },
+    cutJSTDatetime(datetime) {
+      // JSTでもらった時刻を適切な形に整形
+      return moment(datetime).format('YYYY-MM-DD HH:mm')
     },
     handleClose(e) {
       this.$store.dispatch('Stream/Show/cleanup', e)

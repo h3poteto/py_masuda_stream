@@ -13,6 +13,7 @@ const Show = {
     entryDetailVisible: true,
     loading: true,
     userAlreadyBookmarked: false,
+    userBookmarked: {},
   },
   mutations: {
     changeEntryDetailVisible(state, open) {
@@ -38,8 +39,11 @@ const Show = {
     changeLoading(state, loading) {
       state.loading = loading
     },
-    changeBookmarked(state, bookmarked) {
-      state.bookmarked = bookmarked
+    changeAlreadyBookmarked(state, bookmarked) {
+      state.userAlreadyBookmarked = bookmarked
+    },
+    setUserBookmarked(state, response) {
+      state.userBookmarked = response
     }
   },
   actions: {
@@ -47,17 +51,21 @@ const Show = {
       commit('changeEntryDetailVisible', true)
     },
     loadEntry({ commit }, id) {
-      axios
-        .get(`/api/masuda/entries/${id}`)
-        .then((res) => {
-          commit('setEntry', res.data)
-          commit('changeLoading', false)
-        })
-        .catch((err) => {
-          // eslint-disable-next-line no-console
-          console.log(err)
-          commit('changeLoading', false)
-        })
+      return new Promise((resolve, reject) => {
+        axios
+          .get(`/api/masuda/entries/${id}`)
+          .then((res) => {
+            commit('setEntry', res.data)
+            commit('changeLoading', false)
+            resolve(res)
+          })
+          .catch((err) => {
+            // eslint-disable-next-line no-console
+            console.log(err)
+            commit('changeLoading', false)
+            reject(err)
+          })
+      })
     },
     loadBookmarks({ commit }, id) {
       axios
@@ -92,13 +100,25 @@ const Show = {
             }
           })
           .then((res) => {
-            commit('changeBookmakred', true)
+            commit('changeAlreadyBookmarked', true)
+            commit('setUserBookmarked', res.data)
             resolve(res)
           })
           .catch((err) => {
             reject(err)
           })
       })
+    },
+    fetchUserBookmark({ commit }, url) {
+      axios
+        .get(`/api/user/bookmark?url=${url}`)
+        .then((res) => {
+          commit('changeAlreadyBookmarked', true)
+          commit('setUserBookmarked', res.data)
+        })
+        .catch(() => {
+          commit('changeAlreadyBookmarked', false)
+        })
     }
   }
 }
