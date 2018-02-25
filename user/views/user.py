@@ -1,11 +1,10 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from allauth.socialaccount.models import SocialAccount
+from user.decorators import ajax_login_required
 
 
+@ajax_login_required
 def my(request):
-    if request.user.is_authenticated is not True:
-        return HttpResponse('Unauthorized', status=401)
-
     social_account = SocialAccount.objects.get(user_id=request.user.id)
     user = {
         'user': request.user.id,
