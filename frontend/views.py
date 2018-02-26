@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 
 
 def index(request):
@@ -9,3 +10,8 @@ def index(request):
 def show(request, entry_id):
     context = {}
     return render(request, 'frontend/index.html', context)
+
+
+def not_found(request):
+    # import pdb; pdb.set_trace()
+    raise Http404
