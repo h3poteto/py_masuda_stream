@@ -33,3 +33,15 @@ class Bookmark(View):
         api = HatenaAPIClient(token.app.client_id, token.app.secret, token.token, token.token_secret)
         res = api.get_bookmark(self.request.GET.get('url'))
         return JsonResponse(res)
+
+
+@ajax_login_required
+def feed(request):
+    token = SocialToken.objects.all().select_related(
+        'account',
+        'app',
+    ).filter(app__provider=HatenaProvider.id).filter(account__user_id=request.user.id)[0]
+
+    api = HatenaAPIClient(token.app.client_id, token.app.secret, token.token, token.token_secret)
+    res = api.bookmarks()
+    return JsonResponse(res)
