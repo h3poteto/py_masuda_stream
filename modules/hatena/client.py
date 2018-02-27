@@ -1,9 +1,11 @@
 import requests
+import xmltodict
 from requests_oauthlib import OAuth1
 
 
 class HatenaAPIClient():
-    base_url = 'http://api.b.hatena.ne.jp/1'
+    rest_url = 'http://api.b.hatena.ne.jp/1'
+    atom_url = 'http://b.hatena.ne.jp'
 
     def __init__(self, consumer_key, consumer_secret, oauth_token, oauth_token_secret):
         self.oauth = OAuth1(
@@ -14,7 +16,7 @@ class HatenaAPIClient():
 
     def add_bookmark(self, target_url, comment):
         path = '/my/bookmark'
-        url = self.base_url + path
+        url = self.rest_url + path
         params = {
             'url': target_url,
             'comment': comment,
@@ -31,7 +33,7 @@ class HatenaAPIClient():
 
     def get_bookmark(self, target_url):
         path = '/my/bookmark'
-        url = self.base_url + path + "?url=" + target_url
+        url = self.rest_url + path + "?url=" + target_url
         response = getattr(requests, 'get')(url,
                                             auth=self.oauth,
                                             headers=dict(),
@@ -39,3 +41,15 @@ class HatenaAPIClient():
         response.raise_for_status()
 
         return response.json()
+
+    def bookmarks(self):
+        # http://developer.hatena.ne.jp/ja/documents/bookmark/apis/atom
+        path = '/atom/feed'
+        url = self.atom_url + path
+        response = getattr(requests, 'get')(url,
+                                            auth=self.oauth,
+                                            headers=dict(),
+                                            params=dict())
+        # import pdb; pdb.set_trace()
+        response.raise_for_status()
+        return xmltodict.parse(response.text)

@@ -6,4 +6,5 @@ app_name = "user"
 urlpatterns = [
     path('my', user.my, name="my"),
     path('bookmark', bookmark.Bookmark.as_view(), name="bookmark"),
+    path('bookmark/feed', bookmark.feed, name="bookmark_feed"),
 ]
