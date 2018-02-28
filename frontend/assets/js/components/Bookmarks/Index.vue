@@ -2,7 +2,10 @@
 <div class="margin-container">
   <el-row :gutter="20">
     <el-col :span="18">
-      <div class="grid-content">
+      <div class="gird-content not-login" v-if="!isLoggedIn()">
+        <el-button type="primary" @click="login">Please login</el-button>
+      </div>
+      <div class="grid-content feed" v-if="isLoggedIn()">
         <el-card class="box-card bookmark-card" v-for="bookmark in bookmarks" v-bind:key="bookmark.id">
           <div class="title"><h4><a :href="bookmark.link[0]['@href']" target="_blank">{{ bookmark.title }}</a></h4></div>
           <div class="link"><a :href="bookmark.link[0]['@href']" target="_blank">{{ bookmark.link[0]['@href'] }}</a></div>
@@ -48,6 +51,12 @@ export default {
     this.$store.dispatch('Bookmarks/Index/fetchBookmarks')
   },
   methods: {
+    isLoggedIn() {
+      return this.user !== null
+    },
+    login() {
+      return window.location.href = '/accounts/login'
+    },
     fixDatetime(datetime) {
       // YYYY-MM-DDTHH:mm:ssをYYYY-MM-DD HH:mmにしたい
       return moment(datetime).format('YYYY-MM-DD HH:mm')
@@ -57,7 +66,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.margin-container {
+.not-login {
+  text-align: center;
+}
+
+.feed {
 
   .title {
     a:link,

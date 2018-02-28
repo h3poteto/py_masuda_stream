@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     isLoggedIn() {
-      return this.$store.state.GlobalHeader.user !== null
+      return this.user !== null
     },
     handleSelect(key, keyPath) {
       switch(key) {
@@ -54,6 +54,7 @@ export default {
               message: 'Logout complete',
               type: 'success',
             })
+            this.$store.dispatch('GlobalHeader/changeActiveIndex', '1')
           })
       case "4":
         return window.location.href = '/accounts/login'
