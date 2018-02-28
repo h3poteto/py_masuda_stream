@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'hatenaprovider',
+    'django_slack',
 ]
 
 MIDDLEWARE = [
@@ -158,6 +159,11 @@ WEBPACK_LOADER = {
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
     'formatters': {  # formatter attributes: https://docs.python.org/3/library/logging.html#logrecord-attributes
         'debug': {
             'format': '\t'.join([
@@ -180,10 +186,15 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'json' if DJANGO_ENV == 'prod' else 'debug',
         },
+        'slack': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],  # remove this line if you test in development.
+            'class': 'django_slack.log.SlackExceptionHandler',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
+            'handlers': ['console', 'slack'],
             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
         },
     },
@@ -209,3 +220,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 LOGIN_REDIRECT_URL = "/"
+
+SLACK_TOKEN = os.getenv('SLACK_TOKEN')
+SLACK_CHANNEL = os.getenv('SLACK_CHANNEL', '#playground')
+SLACK_USERNAME = "masuda-stream"
+SLACK_FAIL_SILENTLY = True
+# TODO: use celery backend in production
+SLACK_BACKEND = 'django_slack.backends.UrllibBackend'
