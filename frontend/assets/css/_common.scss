@@ -41,3 +41,11 @@ $base-border-color: #dcdfe6;
 $light-border-color: #e4e7ed;
 $lighter-border-color: #ebeef5;
 $extra-light-border-color: #f2f6fc;
+
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  color: $regular-text-color;
+}
