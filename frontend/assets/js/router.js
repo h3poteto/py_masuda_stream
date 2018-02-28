@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import GlobalHeader from './components/GlobalHeader.vue'
 import StreamIndex from './components/Stream/Index.vue'
 import StreamShow from './components/Stream/Show.vue'
+import BookmarksIndex from './components/Bookmarks/Index.vue'
 
 Vue.use(VueRouter)
 
@@ -20,6 +21,10 @@ const routes = [
             component: StreamShow,
           }
         ],
+      },
+      {
+        path: 'bookmarks',
+        component: BookmarksIndex,
       },
     ],
   },

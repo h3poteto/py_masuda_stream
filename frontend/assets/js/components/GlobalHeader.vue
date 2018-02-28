@@ -30,14 +30,10 @@
 import { mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      activeIndex: "1",
-    }
-  },
   computed: {
     ...mapState({
       user: state => state.GlobalHeader.user,
+      activeIndex: state => state.GlobalHeader.activeIndex,
     })
   },
   created() {

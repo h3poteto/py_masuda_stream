@@ -4,6 +4,7 @@ import createLogger from 'vuex/dist/logger'
 
 import GlobalHeader from './GlobalHeader'
 import Stream from './Stream'
+import Bookmarks from './Bookmarks'
 
 
 Vue.use(Vuex)
@@ -18,6 +19,7 @@ const store = new Vuex.Store({
   modules: {
     GlobalHeader,
     Stream,
+    Bookmarks,
   },
 })
 
