@@ -1,6 +1,7 @@
 import requests
 import xmltodict
 from requests_oauthlib import OAuth1
+from requests.exceptions import HTTPError
 
 
 class HatenaAPIClient():
@@ -27,7 +28,13 @@ class HatenaAPIClient():
                                              headers=dict(),
                                              params=params)
 
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except HTTPError as original:
+            if response.status_code == 401:
+                raise UnauthorizedError(*original.args) from original
+            elif response.status_code == 404:
+                raise NotFoundError(*original.args) from original
 
         return response.json()
 
@@ -38,7 +45,13 @@ class HatenaAPIClient():
                                             auth=self.oauth,
                                             headers=dict(),
                                             params=dict())
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except HTTPError as original:
+            if response.status_code == 401:
+                raise UnauthorizedError(*original.args) from original
+            elif response.status_code == 404:
+                raise NotFoundError(*original.args) from original
 
         return response.json()
 
@@ -51,5 +64,20 @@ class HatenaAPIClient():
                                             headers=dict(),
                                             params=dict())
         # import pdb; pdb.set_trace()
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except HTTPError as original:
+            if response.status_code == 401:
+                raise UnauthorizedError(*original.args) from original
+            elif response.status_code == 404:
+                raise NotFoundError(*original.args) from original
+
         return xmltodict.parse(response.text)
+
+
+class UnauthorizedError(HTTPError):
+    pass
+
+
+class NotFoundError(HTTPError):
+    pass
