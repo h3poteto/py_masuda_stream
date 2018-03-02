@@ -2,7 +2,7 @@ import json
 from django.http import JsonResponse, HttpResponse
 from django.views.generic.base import View
 from allauth.socialaccount.models import SocialToken
-from hatenaprovider.provider import HatenaProvider
+from allauth_hatena.provider import HatenaProvider
 from modules.hatena.client import HatenaAPIClient, UnauthorizedError, NotFoundError
 from user.decorators import ajax_login_required
 from django.utils.decorators import method_decorator
