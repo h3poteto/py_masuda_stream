@@ -68,7 +68,7 @@ export default {
       },
       bookmarkRules: {
         comment: [
-          { min: 0, max: 100, message: 'Length should be 0 to 100', trigger: 'blur' }
+          { min: 0, max: 100, message: 'コメントは100文字以内にしてください', trigger: 'blur' }
         ],
       },
     }
@@ -133,19 +133,19 @@ export default {
                                }))
             .then((res) => {
               this.$message({
-                message: 'Bookmarked',
+                message: 'ブックマークしました',
                 type: 'success',
               })
             })
             .catch((err) => {
               this.$message({
-                message: 'Can not add bookmark',
+                message: 'ブックマークできませんでした',
                 type: 'error',
               })
             })
         } else {
           this.$message({
-            message: 'Validation error',
+            message: 'エラーがあります',
             type: 'error',
           })
         }

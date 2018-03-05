@@ -51,7 +51,7 @@ export default {
         return this.$store.dispatch('GlobalHeader/logout', csrf)
           .then((res) => {
             this.$message({
-              message: 'Logout complete',
+              message: 'ログアウトしました',
               type: 'success',
             })
             this.$store.dispatch('GlobalHeader/changeActiveIndex', '1')
