@@ -1,6 +1,8 @@
 {% extends "account/layout.html" %}
 
-{% block title %}Login{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans 'Login' %}{% endblock %}
 
 {% block content %}
 
@@ -13,7 +15,7 @@
   <div class="main">
     <article>
       <div class="title">
-        <h3>Login</h3>
+        <h3>{% trans 'Login' %}</h3>
       </div>
       <div class="content">
         <div class="sign-in-board">
@@ -24,15 +26,13 @@
           {% for provider in socialaccount_providers %}
           <a title="{{provider.name}}"
              class="session-button {{provider.id}}"
-             href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">Login with {{provider.name}}</a>
+             href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{% blocktrans with name=provider.name %}Login with {{ name }}{% endblocktrans %}</a>
           {% endfor %}
         </div>
       </div>
     </article>
   </div>
 </div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
 
 
 {% endblock %}
