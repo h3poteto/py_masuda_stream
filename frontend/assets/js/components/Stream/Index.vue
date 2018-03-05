@@ -7,7 +7,6 @@
           <el-card class="box-card entry-card">
             <div slot="header" class="clearfix">
               <span>{{ entry.title }}</span>
-              <a v-bind:href="entry.link"><el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button></a>
             </div>
             <div>
               {{ entry.summary }}

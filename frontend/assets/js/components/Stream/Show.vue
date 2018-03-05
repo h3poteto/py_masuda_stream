@@ -1,6 +1,7 @@
 <template>
 <div>
   <el-dialog :title="entry.title" :visible.sync="entryDetailVisible" @close="handleClose">
+    <a v-bind:href="entry.link"><el-button class="entry-info" type="text"><i class="el-icon-info"></i></el-button></a>
     <div v-html="entry.anond_content_html" class="anond-content" v-loading="loading"></div>
     <div class="line"></div>
     <div class="tool-box">
@@ -155,6 +156,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.entry-info {
+  float: right;
+  padding: 0;
+}
 
 .line {
   height: 1px;
