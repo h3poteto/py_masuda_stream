@@ -29,26 +29,33 @@ class Bookmark():
         self.logger.info("Save complete: %s", detail.id)
 
     def __save_detail(self):
-        detail = EntryDetail.objects.create(
+        detail, created = EntryDetail.objects.update_or_create(
             entry=self.entry,
-            eid=self.json_body["eid"],
-            count=self.json_body["count"],
-            url=self.json_body["url"],
-            title=self.json_body["title"],
-            screenshot=self.json_body["screenshot"],
+            defaults={
+                'eid': self.json_body["eid"],
+                'count': self.json_body["count"],
+                'url': self.json_body["url"],
+                'title': self.json_body["title"],
+                'screenshot': self.json_body["screenshot"],
+            },
         )
         return detail
 
     def __save_bookmarks(self, detail):
         bookmarks = self.json_body["bookmarks"]
         for b in bookmarks:
-            EntryBookmark.objects.create(
+            timestamp = get_current_timezone().localize(
+                datetime.strptime(
+                    b["timestamp"],
+                    '%Y/%m/%d %H:%M:%S')
+            )
+            # 厳密にやるならbookmarkは更新のたびに全て削除するのが望ましい
+            # しかし，entry_detailとuserでuniqueにしてあるので，これをキーにしても問題ないだろう
+            EntryBookmark.objects.update_or_create(
                 entry_detail=detail,
-                bookmarked_at=get_current_timezone().localize(
-                    datetime.strptime(
-                        b["timestamp"],
-                        '%Y/%m/%d %H:%M:%S')
-                ),
-                comment=b["comment"],
                 user=b["user"],
+                defaults={
+                    'bookmarked_at': timestamp,
+                    'comment': b["comment"],
+                },
             )
