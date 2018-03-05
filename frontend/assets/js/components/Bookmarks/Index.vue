@@ -24,10 +24,7 @@
     <el-col :span="6">
       <div class="grid-content">
         <el-card class="box-card">
-          <div class="side-menu">
-            <p>MasudaStreamについて</p>
-            <p>&copy; 2018 <a href="https://twitter.com/h3_poteto" target="_blank">@h3_poteto</a></p>
-          </div>
+          <sidemenu></sidemenu>
         </el-card>
       </div>
     </el-col>
@@ -38,6 +35,8 @@
 <script>
 import { mapState } from 'vuex'
 import moment from 'moment'
+import Vue from 'vue'
+import Sidemenu from '../Sidemenu'
 
 export default {
   computed: {
@@ -63,6 +62,8 @@ export default {
     }
   }
 }
+
+Vue.component('sidemenu', Sidemenu)
 </script>
 
 <style lang="scss" scoped>
@@ -126,18 +127,6 @@ export default {
     height: 1px;
     background-color: #f2f6fc;
     margin: 1.5em 0 0.5em;
-  }
-  .side-menu {
-    font-size: 14px;
-    color: #606366;
-
-    a:link,
-    a:visited,
-    a:hover,
-    a:active,
-    a:focus {
-      color: #606366;
-    }
   }
 }
 </style>
