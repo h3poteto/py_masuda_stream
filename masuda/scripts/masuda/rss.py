@@ -1,6 +1,5 @@
 import feedparser
 from concurrent.futures import ThreadPoolExecutor
-from django.db.utils import IntegrityError
 import logging
 from masuda.models.entry import Entry
 from masuda.jobs.anond import Anond
@@ -24,22 +23,22 @@ def run():
     logger.debug(rss.entries[0].keys())
     entries = []
     for e in rss.entries:
-        entry = Entry(
+        # entryが保存済みであった場合には，情報を更新したい
+        entry, created = Entry.objects.update_or_create(
             entry_id=e.id,
-            title=e.title,
-            summary=e.summary,
-            content=e.content,
-            link=e.link,
-            hatena_bookmarkcount=e.hatena_bookmarkcount,
-            posted_at=e.updated,
+            defaults={
+                'title': e.title,
+                'summary': e.summary,
+                'content': e.content,
+                'link': e.link,
+                'hatena_bookmarkcount': e.hatena_bookmarkcount,
+                'posted_at': e.updated,
+            },
         )
-        try:
-            entry.save()
-            entries.append(entry)
-            logger.info("Save complete: %s", entry.id)
-        except IntegrityError:
-            logger.error("Save error: %s", entry.__dict__.values())
+        entries.append(entry)
+        logger.info("Save complete: %s", entry.id)
 
+    # 保存されたentry情報に基づいてanondとbookmarkの情報を更新する
     with ThreadPoolExecutor(max_workers=2) as executor:
         executor.submit(async_anond, entries, logger)
         executor.submit(async_bookmark, entries, logger)

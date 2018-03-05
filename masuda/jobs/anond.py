@@ -44,8 +44,11 @@ class Anond():
         self.content_html = ''.join(elements)
 
     def save(self):
-        o = masuda.models.anond.Anond.objects.create(
+        # 保存済みだった場合には情報を更新する
+        o, created = masuda.models.anond.Anond.objects.update_or_create(
             entry=self.entry,
-            content_html=self.content_html,
+            defaults={
+                'content_html': self.content_html,
+            },
         )
         self.logger.info("Save complete: %s", o.id)
