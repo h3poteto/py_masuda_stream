@@ -100,6 +100,7 @@ DATABASES = {
         'USER': os.getenv('DB_USER', 'root'),
         'PORT': os.getenv('DB_PORT', '3306'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
+        'CONN_MAX_AGE': 20,
         'OPTIONS': {
             'charset': 'utf8mb4',
         },
