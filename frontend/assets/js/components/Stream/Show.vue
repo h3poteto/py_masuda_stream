@@ -32,12 +32,12 @@
             <el-input type="textarea" v-model="bookmarkForm.comment"></el-input>
           </el-form-item>
           <el-form-item class="submit">
-            <el-button type="primary" @click="submitBookmark">Bookmark</el-button>
+            <el-button type="primary" @click="submitBookmark">ブックマークする</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="login-required" v-if="!isLoggedIn()">
-        <el-button type="primary" @click="goToLoginPage">Login to add bookmark</el-button>
+        <el-button type="primary" @click="goToLoginPage">ログインしてブックマークする</el-button>
       </div>
     </div>
     <div class="bookmark-comment">
@@ -68,7 +68,7 @@ export default {
       },
       bookmarkRules: {
         comment: [
-          { min: 0, max: 100, message: 'Length should be 0 to 100', trigger: 'blur' }
+          { min: 0, max: 100, message: 'コメントは100文字以内にしてください', trigger: 'blur' }
         ],
       },
     }
@@ -133,19 +133,19 @@ export default {
                                }))
             .then((res) => {
               this.$message({
-                message: 'Bookmarked',
+                message: 'ブックマークしました',
                 type: 'success',
               })
             })
             .catch((err) => {
               this.$message({
-                message: 'Can not add bookmark',
+                message: 'ブックマークできませんでした',
                 type: 'error',
               })
             })
         } else {
           this.$message({
-            message: 'Validation error',
+            message: 'エラーがあります',
             type: 'error',
           })
         }

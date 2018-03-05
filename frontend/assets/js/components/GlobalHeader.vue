@@ -10,13 +10,13 @@
         :router="true"
         @select="handleSelect">
         <span class="title-logo">MasudaStream</span>
-        <el-menu-item index="1" :route="{path: '/'}">Stream</el-menu-item>
-        <el-menu-item index="2" :route="{path: '/bookmarks'}">Bookmarks</el-menu-item>
+        <el-menu-item index="1" :route="{path: '/'}">エントリー</el-menu-item>
+        <el-menu-item index="2" :route="{path: '/bookmarks'}">ブックマーク</el-menu-item>
         <el-submenu index="3" v-if="isLoggedIn()" class="right-menu">
           <template slot="title"><img class="avatar" :src="user.avatar_url" /></template>
-          <el-menu-item index="3-1" :route="{path: '/'}">Logout</el-menu-item>
+          <el-menu-item index="3-1" :route="{path: '/'}">ログアウト</el-menu-item>
         </el-submenu>
-        <el-menu-item index="4" v-if="!isLoggedIn()" class="right-menu" :route="{path: '/'}">Login</el-menu-item>
+        <el-menu-item index="4" v-if="!isLoggedIn()" class="right-menu" :route="{path: '/'}">ログイン</el-menu-item>
       </el-menu>
     </el-header>
     <el-main>
@@ -51,7 +51,7 @@ export default {
         return this.$store.dispatch('GlobalHeader/logout', csrf)
           .then((res) => {
             this.$message({
-              message: 'Logout complete',
+              message: 'ログアウトしました',
               type: 'success',
             })
             this.$store.dispatch('GlobalHeader/changeActiveIndex', '1')
