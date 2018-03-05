@@ -22,12 +22,18 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+dkhq_prp(9g_twakp*8!07e*l(jin6y!d$x6!p0ghbpsf_*h5'
+SECRET_KEY = os.getenv('SECRET_KEY', '+dkhq_prp(9g_twakp*8!07e*l(jin6y!d$x6!p0ghbpsf_*h5')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if DJANGO_ENV == 'prod' else True
 
-ALLOWED_HOSTS = []
+CSRF_COOKIE_SECURE = True if DJANGO_ENV == 'prod' else False
+
+SESSION_COOKIE_SECURE = True if DJANGO_ENV == 'prod' else False
+
+ALLOWED_HOSTS = [
+    'masuda-stream.net',
+] if DJANGO_ENV == 'prod' else []
 
 
 # Application definition
@@ -90,9 +96,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'masuda_stream',
-        'HOST': 'mysql',
-        'USER': 'root',
-        'PORT': '3306',
+        'HOST': os.getenv('DB_HOST', 'mysql'),
+        'USER': os.getenv('DB_USER', 'root'),
+        'PORT': os.getenv('DB_PORT', '3306'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
         'OPTIONS': {
             'charset': 'utf8mb4',
         },
