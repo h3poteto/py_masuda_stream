@@ -32,12 +32,12 @@
             <el-input type="textarea" v-model="bookmarkForm.comment"></el-input>
           </el-form-item>
           <el-form-item class="submit">
-            <el-button type="primary" @click="submitBookmark">Bookmark</el-button>
+            <el-button type="primary" @click="submitBookmark">ブックマークする</el-button>
           </el-form-item>
         </el-form>
       </div>
       <div class="login-required" v-if="!isLoggedIn()">
-        <el-button type="primary" @click="goToLoginPage">Login to add bookmark</el-button>
+        <el-button type="primary" @click="goToLoginPage">ログインしてブックマークする</el-button>
       </div>
     </div>
     <div class="bookmark-comment">

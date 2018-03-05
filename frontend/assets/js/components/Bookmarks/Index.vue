@@ -25,7 +25,7 @@
       <div class="grid-content">
         <el-card class="box-card">
           <div class="side-menu">
-            <p>About</p>
+            <p>MasudaStreamについて</p>
             <p>&copy; 2018 <a href="https://twitter.com/h3_poteto" target="_blank">@h3_poteto</a></p>
           </div>
         </el-card>
