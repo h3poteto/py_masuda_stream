@@ -2,6 +2,8 @@ version: '3'
 services:
   django:
     image: 564677439943.dkr.ecr.ap-northeast-1.amazonaws.com/h3poteto/masudastream:latest
+    # virtualenvは無効化する
+    entrypoint: []
     environment:
       DJANGO_ENV: prod
       DJANGO_LOG_LEVEL: INFO
@@ -12,8 +14,10 @@ services:
       DB_PASSWORD: $DB_PASSWORD
       SLACK_TOKEN: $SLACK_TOKEN
       SLACK_CHANNEL: $SLACK_CHANNEL
+      # pip install --userのインストール先をパスに追加する必要がある
+      PATH: /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/python/.local/bin
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000"]
+      test: ["CMD", "curl", "-H", "Host: masuda-stream.net", "-f", "http://127.0.0.1:8000"]
       interval: 20s
       timeout: 10s
       retries: 3
