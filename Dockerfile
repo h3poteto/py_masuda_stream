@@ -13,6 +13,12 @@ RUN set -x \
 
 FROM h3poteto/python:3.6.4
 
+RUN set -x \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+    curl \
+    rm -rf /var/lib/apt/lists/*
+
 ENV APP_DIR /var/opt/app
 ENV DJANGO_ENV prod
 
