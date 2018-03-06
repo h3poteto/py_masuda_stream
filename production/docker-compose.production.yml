@@ -17,7 +17,7 @@ services:
       # pip install --userのインストール先をパスに追加する必要がある
       PATH: /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/python/.local/bin
     healthcheck:
-      test: ["CMD", "curl", "-H", "Host: masuda-stream.net", "-f", "http://127.0.0.1:8000"]
+      test: ["CMD", "curl", "-H", "Host: masuda-stream.net", "-f", "http://127.0.0.1:8001"]
       interval: 20s
       timeout: 10s
       retries: 3

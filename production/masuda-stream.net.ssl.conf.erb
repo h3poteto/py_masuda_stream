@@ -20,6 +20,7 @@ server {
 
     location / {
         uwsgi_pass django;
+        proxy_set_header Host <%= domain.name %>;
         include /var/opt/uwsgi_params;
     }
 }

@@ -29,4 +29,4 @@ RUN set -x \
 
 EXPOSE 8000:8000
 
-CMD uwsgi --http :8000 --module masuda_stream.wsgi --static-map /static=${APP_DIR}/static
+CMD uwsgi --socket :8000 --http :8001 --module masuda_stream.wsgi --static-map /static=${APP_DIR}/static
