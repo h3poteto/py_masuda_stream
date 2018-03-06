@@ -8,6 +8,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('entries/<int:entry_id>', views.show, name='show'),
     path('bookmarks', views.index, name='bookmarks'),
+    path('about', views.about, name='about'),
     url(r"^accounts/password/change/$", views.not_found, name="account_change_password"),
     url(r"^accounts/password/set/$", views.not_found, name="account_set_password"),
     url(r"^accounts/inactive/$", views.not_found, name="account_inactive"),

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-05 22:42+0900\n"
+"POT-Creation-Date: 2018-03-06 15:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,3 +36,27 @@ msgstr "%(name)sアカウントでログイン"
 #: allauth/templates/account/logout.html:27
 msgid "Logout"
 msgstr "ログアウト"
+
+#: frontend/templates/frontend/about.html:5
+msgid "About"
+msgstr "MasudaStreamについて"
+
+#: frontend/templates/frontend/about.html:16
+msgid "Show entries"
+msgstr "エントリーを見る"
+
+#: frontend/templates/frontend/about.html:22
+msgid "new entries"
+msgstr "はてな匿名ダイアリーの新着ブックマークを見やすく"
+
+#: frontend/templates/frontend/about.html:26
+msgid "new entries detail"
+msgstr "ブックマークがついたはてな匿名ダイアリーだけを時系列順に並べたエントリー．無限スクロールで匿名ダイアリーを過去のダイアリーまで遡れる．"
+
+#: frontend/templates/frontend/about.html:38
+msgid "check comment"
+msgstr "ダイアログでブックマークコメントをチェック"
+
+#: frontend/templates/frontend/about.html:45
+msgid "check comment detail"
+msgstr "ダイアログで記事本文とブックマークコメントを一度にチェックできる．気に入った記事があればそこからブックマークを追加することもできる．"

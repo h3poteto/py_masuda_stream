@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-05 22:42+0900\n"
+"POT-Creation-Date: 2018-03-06 15:20+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,3 +36,27 @@ msgstr "Login with %(name)s"
 #: allauth/templates/account/logout.html:27
 msgid "Logout"
 msgstr "Logout"
+
+#: frontend/templates/frontend/about.html:5
+msgid "About"
+msgstr "About"
+
+#: frontend/templates/frontend/about.html:16
+msgid "Show entries"
+msgstr "Show entries"
+
+#: frontend/templates/frontend/about.html:22
+msgid "new entries"
+msgstr "New entries of anonimous diary in hatena"
+
+#: frontend/templates/frontend/about.html:26
+msgid "new entries detail"
+msgstr "You can go back old entry using infinite scroll which is arranged in chronological order."
+
+#: frontend/templates/frontend/about.html:38
+msgid "check comment"
+msgstr "Check comment in dialog"
+
+#: frontend/templates/frontend/about.html:45
+msgid "check comment detail"
+msgstr "You can check bookmark comments in dialog. And you can add bookmark that entry."

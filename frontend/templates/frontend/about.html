@@ -1,0 +1,56 @@
+{% extends "account/layout.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'About' %}{% endblock %}
+
+{% block content %}
+
+<div class="about">
+  <div class="top-background">
+    <div class="logo">MasudaStream</div>
+    <div class="main-title">
+      <h1>MasudaStream</h1>
+    </div>
+    <div class="sub-title">
+      <a href="/" class="button top-button">{% trans 'Show entries' %}</a>
+    </div>
+  </div>
+  <div class="description">
+    <div class="topic">
+      <div class="title">
+        <h2>{% trans 'new entries' %}</h2>
+      </div>
+      <div class="row">
+        <div class="left">
+          {% trans 'new entries detail' %}
+        </div>
+        <div class="right">
+          <img src="/static/assets/images/entries.png" />
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <div class="description description-inverse">
+    <div class="topic">
+      <div class="title">
+        <h2>{% trans 'check comment' %}</h2>
+      </div>
+      <div class="row">
+        <div class="left">
+          <img src="/static/assets/images/entry_show.png" />
+        </div>
+        <div class="right">
+          {% trans 'check comment detail' %}
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <p>&copy; 2018 <a href="https://twitter.com/h3_poteto" target="_blank">@h3_poteto</a></p>
+</footer>
+
+{% endblock %}
