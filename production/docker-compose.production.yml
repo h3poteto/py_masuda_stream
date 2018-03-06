@@ -1,0 +1,52 @@
+version: '3'
+services:
+  django:
+    image: 564677439943.dkr.ecr.ap-northeast-1.amazonaws.com/h3poteto/masudastream:latest
+    environment:
+      DJANGO_ENV: prod
+      DJANGO_LOG_LEVEL: INFO
+      SECRET_KEY: $SECRET_KEY
+      DB_HOST: $DB_HOST
+      DB_USER: $DB_USER
+      DB_NAME: $DB_NAME
+      DB_PASSWORD: $DB_PASSWORD
+      SLACK_TOKEN: $SLACK_TOKEN
+      SLACK_CHANNEL: $SLACK_CHANNEL
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000"]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 5
+        window: 120s
+      update_config:
+        parallelism: 1
+        delay: 20s
+    stop_grace_period: 20s
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - django
+    volumes:
+      - ./masuda-stream.net.conf.erb:/var/lib/nginx-conf/masuda-stream.net.conf.erb:ro
+      - ./masuda-stream.net.ssl.conf.erb:/var/lib/nginx-conf/masuda-stream.net.ssl.conf.erb:ro
+      - ./uwsgi_params:/var/opt/uwsgi_params:ro
+      - ./ssl_certs:/var/lib/https-portal
+    environment:
+      DOMAINS: 'masuda-stream.net'
+      WORKER_PROCESS: 2
+      STAGE: 'production'
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 20s
+    stop_grace_period: 10s
