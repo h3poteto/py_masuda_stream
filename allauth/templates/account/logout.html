@@ -1,6 +1,8 @@
 {% extends "account/layout.html" %}
 
-{% block title %}Login{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans 'Logout' %}{% endblock %}
 
 {% block content %}
 
@@ -13,7 +15,7 @@
   <div class="main">
     <article>
       <div class="title">
-        <h3>Logout</h3>
+        <h3>{% trans 'Logout' %}</h3>
       </div>
       <div class="content">
         <div class="sign-in-board">
@@ -22,15 +24,13 @@
             {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
             {% endif %}
-            <button type="submit" class="session-button">Logout</button>
+            <button type="submit" class="session-button">{% trans 'Logout' %}</button>
           </form>
         </div>
       </div>
     </article>
   </div>
 </div>
-
-{% include "socialaccount/snippets/login_extra.html" %}
 
 
 {% endblock %}

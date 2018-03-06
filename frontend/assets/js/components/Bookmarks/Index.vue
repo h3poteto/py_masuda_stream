@@ -3,7 +3,7 @@
   <el-row :gutter="20">
     <el-col :span="18">
       <div class="gird-content not-login" v-if="!isLoggedIn()">
-        <el-button type="primary" @click="login">Please login</el-button>
+        <el-button type="primary" @click="login">ログインしてブックマークを確認</el-button>
       </div>
       <div class="grid-content feed" v-if="isLoggedIn()">
         <el-card class="box-card bookmark-card" v-for="bookmark in bookmarks" v-bind:key="bookmark.id">

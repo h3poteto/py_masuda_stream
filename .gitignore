@@ -7,3 +7,4 @@ __pycache__
 webpack-stats.json
 pip-selfcheck.json
 .cache-loader
+*.mo

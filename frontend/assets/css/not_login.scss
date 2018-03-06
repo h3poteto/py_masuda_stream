@@ -13,9 +13,96 @@ body {
   height: 100%;
 }
 
+.about {
+  .top-background {
+    background: url("/static/assets/images/about_background.jpeg") no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    color: $extra-light-border-color;
+    height: 40rem;
+    min-height: 70%;
+    width: 100%;
+
+    .logo {
+      font-size: large;
+      padding: 8px 16px;
+    }
+
+    .main-title {
+      @include side-margin-container();
+      padding-top: 11.25rem;
+      text-align: right;
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 400;
+      }
+    }
+
+    .sub-title {
+      margin-top: 5rem;
+      text-align: center;
+
+      .top-button {
+        background-color: $blue-color;
+        border: 0;
+        border-radius: 4px;
+        color: $extra-light-border-color;
+        font-size: large;
+        padding: 8px 32px;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .description {
+    padding: 3rem 0;
+
+    .topic {
+      @include side-margin-container(65%);
+    }
+
+    .title {
+      margin: 0 0 2rem;
+      text-align: center;
+
+      h2 {
+        font-weight: 400;
+      }
+    }
+
+    .row {
+      .left {
+        float: left;
+        max-width: 45%;
+      }
+
+      .right {
+        float: right;
+        max-width: 45%;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .description-inverse {
+    background: url("/static/assets/images/about_description.jpg") no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    color: $extra-light-border-color;
+  }
+}
+
+footer {
+  padding: 2rem 0;
+  text-align: center;
+}
+
 .session {
   background: url("/static/assets/images/login_background.jpg") no-repeat;
-  background-attachment: fixed;
   background-position: 50% 50%;
   background-size: cover;
   min-height: 100%;

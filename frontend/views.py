@@ -15,3 +15,8 @@ def show(request, entry_id):
 def not_found(request):
     # import pdb; pdb.set_trace()
     raise Http404
+
+
+def about(request):
+    context = {}
+    return render(request, 'frontend/about.html', context)

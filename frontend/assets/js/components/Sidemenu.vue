@@ -1,6 +1,6 @@
 <template>
 <div class="side-menu">
-  <p>MasudaStreamについて</p>
+  <p><a href="/about">MasudaStreamについて</a></p>
   <p>&copy; 2018 <a href="https://twitter.com/h3_poteto" target="_blank">@h3_poteto</a></p>
 </div>
 </template>
