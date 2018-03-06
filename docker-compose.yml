@@ -41,6 +41,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/var/opt/app
+      - .bashrc:/home/python/.bashrc:ro
     working_dir: /var/opt/app
     command: /bin/bash
 
