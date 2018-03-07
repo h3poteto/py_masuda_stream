@@ -9,3 +9,4 @@ pip-selfcheck.json
 .cache-loader
 *.mo
 production/ssl_certs
+production/log
