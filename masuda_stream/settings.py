@@ -32,8 +32,7 @@ CSRF_COOKIE_SECURE = True if DJANGO_ENV == 'prod' else False
 SESSION_COOKIE_SECURE = True if DJANGO_ENV == 'prod' else False
 
 ALLOWED_HOSTS = [
-    'masuda-stream.net',
-    'www.masuda-stream.net',
+    '*',
 ] if DJANGO_ENV == 'prod' else []
 
 
