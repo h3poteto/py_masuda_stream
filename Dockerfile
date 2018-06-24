@@ -13,12 +13,18 @@ RUN set -x \
 
 FROM h3poteto/python:3.6.4
 
+USER root
+
 ENV APP_DIR /var/opt/app
 ENV DJANGO_ENV prod
 
 COPY --chown=python:python . ${APP_DIR}
 COPY --chown=python:python --from=frontend /var/opt/app/webpack-stats.json ${APP_DIR}/webpack-stats.json
 COPY --chown=python:python --from=frontend /var/opt/app/public ${APP_DIR}/public
+
+RUN set -x \
+    && curl -fsSL https://github.com/minamijoyo/myaws/releases/download/v0.3.0/myaws_v0.3.0_linux_amd64.tar.gz \
+    | tar -xzC /usr/local/bin && chmod +x /usr/local/bin/myaws
 
 USER python
 
@@ -29,4 +35,6 @@ RUN set -x \
 
 EXPOSE 8000:8000
 
-CMD uwsgi --socket :8000 --http :8001 --module masuda_stream.wsgi --static-map /static=${APP_DIR}/static
+ENTRYPOINT ["entrypoint.sh"]
+
+CMD uwsgi --ini uwsgi_prod.ini
