@@ -1,5 +1,7 @@
 import feedparser
 import logging
+import urllib
+import requests
 from masuda.models.entry import Entry
 from masuda.jobs.anond import Anond
 from masuda.jobs.bookmark import Bookmark
@@ -44,13 +46,19 @@ def run():
 
 def async_anond(entries=[], logger=None):
     for e in entries:
-        anond = Anond(e, logger)
-        anond.fetch()
-        anond.save()
+        try:
+            anond = Anond(e, logger)
+            anond.fetch()
+            anond.save()
+        except urllib.error.HTTPError as e:
+            logger.error(e)
 
 
 def async_bookmark(entries=[], logger=None):
     for e in entries:
-        b = Bookmark(e, logger)
-        b.fetch()
-        b.save()
+        try:
+            b = Bookmark(e, logger)
+            b.fetch()
+            b.save()
+        except requests.exceptions.HTTPError as e:
+            logger.error(e)
