@@ -47,7 +47,7 @@ class Bookmark():
             timestamp = get_current_timezone().localize(
                 datetime.strptime(
                     b["timestamp"],
-                    '%Y/%m/%d %H:%M:%S')
+                    '%Y/%m/%d %H:%M')
             )
             # 厳密にやるならbookmarkは更新のたびに全て削除するのが望ましい
             # しかし，entry_detailとuserでuniqueにしてあるので，これをキーにしても問題ないだろう

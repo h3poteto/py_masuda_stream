@@ -32,13 +32,15 @@ class Anond():
         # make_links_absoluteではてなキーワードへのリンクを相対パスから絶対URLに変更しておく必要がある
         for element in pq.find("div.section").make_links_absolute().children():
             # #title-below-text-adから#rectangle-middleまでのhtmlをまるごといただく
-            if pq(element).attr.id == "rectangle-middle":
+            # 本文が短い場合はrectangle-middleが存在しない場合もある
+            if pq(element).attr.id == "rectangle-middle" or pq(element).hasClass('share-button'):
                 content_start = False
 
             if content_start:
                 elements.append(pq(element).outerHtml())
 
-            if pq(element).attr.id == "title-below-text-ad":
+            # 最近バナー広告も入るようになったのでidが変更されている
+            if pq(element).attr.id == "title-below-text-ad" or pq(element).attr.id == "title-below-ad":
                 content_start = True
 
         self.content_html = ''.join(elements)
