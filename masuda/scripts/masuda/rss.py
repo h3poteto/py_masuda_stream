@@ -1,5 +1,4 @@
 import feedparser
-from concurrent.futures import ThreadPoolExecutor
 import logging
 from masuda.models.entry import Entry
 from masuda.jobs.anond import Anond
@@ -39,9 +38,8 @@ def run():
         logger.info("Save complete: %s", entry.id)
 
     # 保存されたentry情報に基づいてanondとbookmarkの情報を更新する
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        executor.submit(async_anond, entries, logger)
-        executor.submit(async_bookmark, entries, logger)
+    async_anond(entries, logger)
+    async_bookmark(entries, logger)
 
 
 def async_anond(entries=[], logger=None):
