@@ -27,6 +27,7 @@ RUN set -x \
     | tar -xzC /usr/local/bin && chmod +x /usr/local/bin/myaws
 
 USER python
+WORKDIR ${APP_DIR}
 
 RUN set -x \
     && pip install -r requirements.txt --user \
