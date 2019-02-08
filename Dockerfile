@@ -36,6 +36,6 @@ RUN set -x \
 
 EXPOSE 8000:8000
 
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT [ "/var/opt/app/entrypoint.sh" ]
 
 CMD uwsgi --ini uwsgi_prod.ini

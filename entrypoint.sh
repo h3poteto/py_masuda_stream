@@ -1,6 +1,13 @@
 #!/bin/bash
 
 export AWS_DEFAULT_REGION=ap-northeast-1
+
+myaws ssm parameter get masudastream.$SERVICE_ENV.django_env --region $AWS_DEFAULT_REGION
+ret=$?
+if [[ $ret -ne 0 ]]; then
+    exit
+fi
+
 export DJANGO_ENV=`myaws ssm parameter get masudastream.$SERVICE_ENV.django_env --region $AWS_DEFAULT_REGION`
 export DJANGO_LOG_LEVEL=`myaws ssm parameter get masudastream.$SERVICE_ENV.django_log_level --region $AWS_DEFAULT_REGION`
 export SECRET_KEY=`myaws ssm parameter get masudastream.$SERVICE_ENV.secret_key --region $AWS_DEFAULT_REGION`
